@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koko TV | Movie Hub Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .navbar {
+            background-color: #1f1f1f;
+        }
+
+        .navbar-brand img {
+            width: 150px;
+            height: auto;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #d883ff;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-container input {
+            background-color: #2c2c2c;
+            border: none;
+            padding: 10px;
+            width: 200px;
+            color: #ffffff;
+        }
+
+        .search-container input:focus {
+            outline: none;
+        }
+
+        .search-btn {
+            background-color: #d883ff;
+            border: none;
+            padding: 10px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            background-color: #1f1f1f;
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transition: width 0.3s;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .sidebar.closed {
+            width: 60px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.closed .nav-link {
+            justify-content: center;
+        }
+
+        .sidebar .nav-link:hover {
+            color: #d883ff;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .sidebar.closed .nav-link i {
+            margin-right: 0;
+        }
+
+        .sidebar .nav-link span {
+            display: inline;
+        }
+
+        .sidebar.closed .nav-link span {
+            display: none;
+        }
+
+        .sidebar-toggle {
+            color: #d883ff;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .sidebar.closed ~ .main-content {
+            margin-left: 90px;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: #2c2c2c;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            color: #d883ff;
+        }
+
+        .card-text {
+            color: #ffffff;
+        }
+
+        .btn-watch {
+            background-color: #d883ff;
+            border: none;
+            color: #ffffff;
+            transition: background-color 0.3s;
+        }
+
+        .btn-watch:hover {
+            background-color: #c66be1;
+        }
+
+        .footer {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .trailer {
+            margin-top: 15px;
+        }
+
+        /* Add icons for more menu options */
+        .nav-item .fa-home {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-film {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-tv {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-users {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-heart {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-history {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-cog {
+            color: #ffffff;
+        }
+
+        .nav-item .fa-info-circle {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="https://via.placeholder.com/150x50.png?text=Koko+TV" alt="Koko TV Logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">TV Shows</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Creators</a>
+                        </li>
+                    </ul>
+                    <div class="search-container">
+                        <input type="text" placeholder="Search" aria-label="Search">
+                        <button class="search-btn" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav class="nav flex-column">
+            <a class="nav-link" href="#dashboard">
+                <i class="fas fa-home"></i> <span>Dashboard</span>
+            </a>
+            <a class="nav-link" href="#categories">
+                <i class="fas fa-film"></i> <span>Categories</span>
+            </a>
+            <a class="nav-link" href="#favorites">
+                <i class="fas fa-heart"></i> <span>Favorites</span>
+            </a>
+            <a class="nav-link" href="#history">
+                <i class="fas fa-history"></i> <span>History</span>
+            </a>
+            <a class="nav-link" href="#settings">
+                <i class="fas fa-cog"></i> <span>Settings</span>
+            </a>
+            <a class="nav-link" href="#about">
+                <i class="fas fa-info-circle"></i> <span>About Us</span>
+            </a>
+            <a class="nav-link" href="#contact">
+                <i class="fas fa-phone"></i> <span>Contact Us</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+        <div class="container">
+            <h1 class="text-center mb-5">Top Picks for You</h1>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="card">
+                        <img src="https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg" class="card-img-top"
+                            alt="Avengers: Endgame">
+                        <div class="card-body">
+                            <h5 class="card-title">Avengers: Endgame</h5>
+                            <p class="card-text">After the devastating events of Avengers: Infinity War, the universe is
+                                in ruins. With the help of remaining allies, the Avengers assemble once more.</p>
+                            <a href="#" class="btn btn-watch">Watch Now</a>
+                            <div class="trailer">
+                                <iframe width="100%" height="200"
+                                    src="https://www.youtube.com/embed/TcMBFSGVi1c"
+                                    title="Avengers: Endgame Official Trailer" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg" class="card-img-top"
+                            alt="Wonder Woman 1984">
+                        <div class="card-body">
+                            <h5 class="card-title">Wonder Woman 1984</h5>
+                            <p class="card-text">Wonder Woman squares off against Maxwell Lord and the Cheetah, a
+                                villainess who possesses superhuman strength and agility.</p>
+                            <a href="#" class="btn btn-watch">Watch Now</a>
+                            <div class="trailer">
+                                <iframe width="100%" height="200"
+                                    src="https://www.youtube.com/embed/sfM7_JLk-84"
+                                    title="Wonder Woman 1984 Official Trailer" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <img src="https://image.tmdb.org/t/p/w500/jOgbnL5FB30pprEjZaY1E1iPtPM.jpg" class="card-img-top"
+                            alt="Tenet">
+                        <div class="card-body">
+                            <h5 class="card-title">Tenet</h5>
+                            <p class="card-text">Armed with only one word, Tenet, and fighting for the survival of the
+                                entire world, a Protagonist journeys through a twilight world of international
+                                espionage.</p>
+                            <a href="#" class="btn btn-watch">Watch Now</a>
+                            <div class="trailer">
+                                <iframe width="100%" height="200"
+                                    src="https://www.youtube.com/embed/L3pk_TBkihU"
+                                    title="Tenet Official Trailer" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        &copy; 2024 Koko TV. All rights reserved.
+    </footer>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+
+            if (sidebar.classList.contains('closed')) {
+                sidebar.classList.remove('closed');
+                mainContent.style.marginLeft = '270px';
+            } else {
+                sidebar.classList.add('closed');
+                mainContent.style.marginLeft = '90px';
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
